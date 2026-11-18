@@ -5,6 +5,12 @@ import './App.css'
 import { useState } from "react";
 
 function App() {
+  const [kategorie, setKategorie] = useState({
+    Frontend: true,
+    Backend: true,
+    QA: true,
+  });
+
   const [warsztaty, setWarsztaty] = useState([
     {
       id: 1,
@@ -46,6 +52,31 @@ function App() {
   return (
     <div className="container mt-4">
       <h1>Katalog warsztatów IT</h1>
+      <form>
+        <div className="mb-3">
+          <h5>Filtruj według kategorii:</h5>
+
+          {Object.keys(kategorie).map((kategoria) => (
+            <div className="form-check form-check-inline" key={kategoria}>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={kategoria}
+                checked={kategorie[kategoria]}
+                onChange={(e) =>
+                  setKategorie({
+                    ...kategorie,
+                    [kategoria]: e.target.checked,
+                  })
+                }
+              />
+              <label className="form-check-label" htmlFor={kategoria}>
+                {kategoria}
+              </label>
+            </div>
+          ))}
+        </div>
+      </form>
     </div>
   );
 }
