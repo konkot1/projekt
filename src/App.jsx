@@ -5,6 +5,7 @@ import './App.css'
 import { useState } from "react";
 
 function App() {
+  const [tylkoDostepne, setTylkoDostepne] = useState(true);
   const [kategorie, setKategorie] = useState({
     Frontend: true,
     Backend: true,
@@ -49,6 +50,16 @@ function App() {
     },
   ]);
 
+  const przefiltrowaneWarsztaty = warsztaty.filter((warsztat) => {
+  const pasujeKategoria = kategorie[warsztat.kategoria];
+
+  const pasujeDostepnosc = tylkoDostepne
+    ? warsztat.wolneMiejsca > 0
+    : true;
+
+    return pasujeKategoria && pasujeDostepnosc;
+  });
+
   return (
     <div className="container mt-4">
       <h1>Katalog warsztatów IT</h1>
@@ -77,6 +88,20 @@ function App() {
           ))}
         </div>
       </form>
+      <div className="mb-3">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="tylkoDostepne"
+            checked={tylkoDostepne}
+            onChange={(e) => setTylkoDostepne(e.target.checked)}
+          />
+          <label className="form-check-label" htmlFor="tylkoDostepne">
+            Tylko warsztaty z wolnymi miejscami
+          </label>
+        </div>
+      </div>
     </div>
   );
 }
