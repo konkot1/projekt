@@ -153,6 +153,9 @@ function App() {
             id="numerWarsztatu"
           />
         </div>
+        <button type="submit" className="btn btn-primary">
+          Zapisz na warsztat
+        </button>
       </form>
     </div>
   );
