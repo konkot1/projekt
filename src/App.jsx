@@ -117,6 +117,43 @@ function App() {
       ) : (
         <p>Brak warsztatów spełniających wybrane kryteria.</p>
       )}
+
+      <h2>Formularz zgłoszeniowy</h2>
+
+      <form>
+        <div className="mb-3">
+          <label htmlFor="imieNazwisko" className="form-label">
+            Imię i nazwisko uczestnika:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="imieNazwisko"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Adres e-mail:
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="numerWarsztatu" className="form-label">
+            Numer warsztatu (ID):
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="numerWarsztatu"
+          />
+        </div>
+      </form>
     </div>
   );
 }
