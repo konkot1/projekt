@@ -44,8 +44,8 @@ function App() {
   ]);
 
   return (
-    <div>
-      {}
+    <div className="container mt-4">
+      <h1>Katalog warsztatów IT</h1>
     </div>
   );
 }
