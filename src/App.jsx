@@ -87,21 +87,36 @@ function App() {
             </div>
           ))}
         </div>
-      </form>
-      <div className="mb-3">
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="tylkoDostepne"
-            checked={tylkoDostepne}
-            onChange={(e) => setTylkoDostepne(e.target.checked)}
-          />
-          <label className="form-check-label" htmlFor="tylkoDostepne">
-            Tylko warsztaty z wolnymi miejscami
-          </label>
+        <div className="mb-3">
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="tylkoDostepne"
+              checked={tylkoDostepne}
+              onChange={(e) => setTylkoDostepne(e.target.checked)}
+            />
+            <label className="form-check-label" htmlFor="tylkoDostepne">
+              Tylko warsztaty z wolnymi miejscami
+            </label>
+          </div>
         </div>
-      </div>
+      </form>
+      
+      <h3>Lista warsztatów:</h3>
+
+      {przefiltrowaneWarsztaty.length > 0 ? (
+        <ol>
+          {przefiltrowaneWarsztaty.map((warsztat) => (
+            <li key={warsztat.id}>
+              {warsztat.tytul} ({warsztat.kategoria}) - Prowadzący:{" "}
+              {warsztat.prowadzacy} | wolne miejsca: {warsztat.wolneMiejsca}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p>Brak warsztatów spełniających wybrane kryteria.</p>
+      )}
     </div>
   );
 }
