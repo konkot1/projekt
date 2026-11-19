@@ -54,3 +54,13 @@ Formularz zbiera trzy dane:
 - **Numer warsztatu (ID)** (`numerWarsztatu`)
 
 Po poprawnym wysłaniu formularza aplikacja zmniejsza liczbę `wolneMiejsca` wybranego warsztatu o `1`, wypisuje potwierdzenie i aktualną liczbę miejsc w konsoli przeglądarki oraz czyści pola formularza do `""`.
+
+
+
+
+## Walidacja danych i obsługa błędów
+
+Funkcja `handleFormSubmit` weryfikuje zgłoszenie przed aktualizacją stanu:
+- brak uzupełnionego imienia, nazwiska lub e-maila → komunikat błędu w konsoli o konieczności uzupełnienia danych,
+- podanie numeru ID, którego nie ma na liście warsztatów → `Błąd: Nieprawidłowy numer warsztatu.`,
+- wybór warsztatu z `wolneMiejsca === 0` → `Brak wolnych miejsc na wybrany warsztat: <tytuł>`.
