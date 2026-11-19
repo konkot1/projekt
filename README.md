@@ -17,3 +17,10 @@ Aplikacja webowa zbudowana w bibliotece **React** z wykorzystaniem stylów **Boo
 - **React** (`useState`) — zarządzanie stanem filtrów, listy warsztatów oraz pól formularza
 - **Bootstrap 5** (`bootstrap.min.css`, `bootstrap.bundle.min.js`) — układ kontenera, formularze, checkboxy i przyciski
 - **Vite / JavaScript (JSX)** — środowisko uruchomieniowe i logika komponentu głównego (`App.jsx`)
+
+
+## Instalacja i uruchomienie
+
+1. Zainstaluj zależności projektu:
+   ```bash
+   npm install
