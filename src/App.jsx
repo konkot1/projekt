@@ -3,16 +3,22 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './App.css';
 import { useState } from "react";
 
+/**
+ * nazwa funkcji: App
+ * opis funkcji: Glowny komponent aplikacji Katalog warsztatow IT odpowiedzialny za filtrowanie listy warsztatow oraz obsluge formularza zgloszeniowego.
+ * parametry: brak
+ * zwracany typ: JSX.Element
+ */
 function App() {
-  const [tylkoDostepne, setTylkoDostepne] = useState(true);
+  const [onlyAvailable, setOnlyAvailable] = useState(true);
 
-  const [kategorie, setKategorie] = useState({
+  const [selectedCategories, setSelectedCategories] = useState({
     Frontend: true,
     Backend: true,
     QA: true,
   });
 
-  const [warsztaty, setWarsztaty] = useState([
+  const [workshops, setWorkshops] = useState([
     {
       id: 1,
       tytul: "Architektura aplikacji w React",
@@ -50,67 +56,92 @@ function App() {
     },
   ]);
 
-  const [imieNazwisko, setImieNazwisko] = useState("");
-  const [email, setEmail] = useState("");
-  const [numerWarsztatu, setNumerWarsztatu] = useState("");
+  const [participantName, setParticipantName] = useState("");
+  const [participantEmail, setParticipantEmail] = useState("");
+  const [workshopIdInput, setWorkshopIdInput] = useState("");
 
-  const przefiltrowaneWarsztaty = warsztaty.filter((warsztat) => {
-    const pasujeKategoria = kategorie[warsztat.kategoria];
+  /**
+   * nazwa funkcji: handleCategoryChange
+   * opis funkcji: Aktualizuje stan zaznaczenia wybranej kategorii warsztatow.
+   * parametry: categoryName - nazwa kategorii, isChecked - wartosc logiczna oznaczajaca zaznaczenie checkboxa
+   * zwracany typ: void (brak)
+   */
+  const handleCategoryChange = (categoryName, isChecked) => {
+    setSelectedCategories((prevCategories) => ({
+      ...prevCategories,
+      [categoryName]: isChecked,
+    }));
+  };
 
-    const pasujeDostepnosc = tylkoDostepne
-      ? warsztat.wolneMiejsca > 0
-      : true;
+  /**
+   * nazwa funkcji: handleAvailabilityChange
+   * opis funkcji: Przelacza filtr wyswietlajacy wylacznie warsztaty z wolnymi miejscami.
+   * parametry: isChecked - wartosc logiczna oznaczajaca zaznaczenie filtra dostepnosci
+   * zwracany typ: void (brak)
+   */
+  const handleAvailabilityChange = (isChecked) => {
+    setOnlyAvailable(isChecked);
+  };
 
-    return pasujeKategoria && pasujeDostepnosc;
+  const filteredWorkshops = workshops.filter((workshop) => {
+    const matchesCategory = selectedCategories[workshop.kategoria];
+    const matchesAvailability = onlyAvailable ? workshop.wolneMiejsca > 0 : true;
+    return matchesCategory && matchesAvailability;
   });
 
+  /**
+   * nazwa funkcji: handleFormSubmit
+   * opis funkcji: Waliduje dane formularza, aktualizuje liczbe wolnych miejsc dla wybranego warsztatu oraz loguje wynik w konsoli.
+   * parametry: event - obiekt zdarzenia wyslania formularza (SyntheticEvent)
+   * zwracany typ: void (brak)
+   */
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    if (!imieNazwisko.trim() || !email.trim()) {
+    if (!participantName.trim() || !participantEmail.trim()) {
       console.error(
         "Błąd: Uzupełnij imię, nazwisko oraz adres e-mail."
       );
       return;
     }
 
-    const wybranyWarsztat = warsztaty.find(
-      (warsztat) => warsztat.id === Number(numerWarsztatu)
+    const selectedWorkshop = workshops.find(
+      (workshop) => workshop.id === Number(workshopIdInput)
     );
 
-    if (!wybranyWarsztat) {
+    if (!selectedWorkshop) {
       console.error("Błąd: Nieprawidłowy numer warsztatu.");
       return;
     }
 
-    if (wybranyWarsztat.wolneMiejsca === 0) {
+    if (selectedWorkshop.wolneMiejsca === 0) {
       console.error(
-        `Brak wolnych miejsc na wybrany warsztat: ${wybranyWarsztat.tytul}`
+        `Brak wolnych miejsc na wybrany warsztat: ${selectedWorkshop.tytul}`
       );
       return;
     }
 
-    const nowaLiczbaMiejsc = wybranyWarsztat.wolneMiejsca - 1;
+    const updatedSeatsCount = selectedWorkshop.wolneMiejsca - 1;
 
-    setWarsztaty((poprzednieWarsztaty) =>
-      poprzednieWarsztaty.map((warsztat) =>
-        warsztat.id === wybranyWarsztat.id
-          ? { ...warsztat, wolneMiejsca: nowaLiczbaMiejsc }
-          : warsztat
+    setWorkshops((previousWorkshops) =>
+      previousWorkshops.map((workshop) =>
+        workshop.id === selectedWorkshop.id
+          ? { ...workshop, wolneMiejsca: updatedSeatsCount }
+          : workshop
       )
     );
 
     console.log(
-      `Zapisano uczestnika: ${imieNazwisko.trim()} (${email.trim()})`
+      `Zapisano uczestnika: ${participantName.trim()} (${participantEmail.trim()})`
     );
 
     console.log(
-      `Wybrany warsztat: ${wybranyWarsztat.tytul} (Pozostało miejsc: ${nowaLiczbaMiejsc})`
+      `Wybrany warsztat: ${selectedWorkshop.tytul} (Pozostało miejsc: ${updatedSeatsCount})`
     );
 
-    setImieNazwisko("");
-    setEmail("");
-    setNumerWarsztatu("");
+    setParticipantName("");
+    setParticipantEmail("");
+    setWorkshopIdInput("");
   };
 
   return (
@@ -121,23 +152,18 @@ function App() {
         <div className="mb-3">
           <h5>Filtruj według kategorii:</h5>
 
-          {Object.keys(kategorie).map((kategoria) => (
-            <div className="form-check form-check-inline" key={kategoria}>
+          {Object.keys(selectedCategories).map((category) => (
+            <div className="form-check form-check-inline" key={category}>
               <input
                 className="form-check-input"
                 type="checkbox"
-                id={kategoria}
-                checked={kategorie[kategoria]}
-                onChange={(e) =>
-                  setKategorie({
-                    ...kategorie,
-                    [kategoria]: e.target.checked,
-                  })
-                }
+                id={category}
+                checked={selectedCategories[category]}
+                onChange={(e) => handleCategoryChange(category, e.target.checked)}
               />
 
-              <label className="form-check-label" htmlFor={kategoria}>
-                {kategoria}
+              <label className="form-check-label" htmlFor={category}>
+                {category}
               </label>
             </div>
           ))}
@@ -149,8 +175,8 @@ function App() {
               className="form-check-input"
               type="checkbox"
               id="tylkoDostepne"
-              checked={tylkoDostepne}
-              onChange={(e) => setTylkoDostepne(e.target.checked)}
+              checked={onlyAvailable}
+              onChange={(e) => handleAvailabilityChange(e.target.checked)}
             />
 
             <label className="form-check-label" htmlFor="tylkoDostepne">
@@ -162,12 +188,12 @@ function App() {
 
       <h3>Lista warsztatów:</h3>
 
-      {przefiltrowaneWarsztaty.length > 0 ? (
+      {filteredWorkshops.length > 0 ? (
         <ul>
-          {przefiltrowaneWarsztaty.map((warsztat) => (
-            <li key={warsztat.id}>
-              ID: {warsztat.id} | {warsztat.tytul} ({warsztat.kategoria}) - Prowadzący:{" "}
-              {warsztat.prowadzacy} | Wolne miejsca: {warsztat.wolneMiejsca}
+          {filteredWorkshops.map((workshop) => (
+            <li key={workshop.id}>
+              ID: {workshop.id} | {workshop.tytul} ({workshop.kategoria}) - Prowadzący:{" "}
+              {workshop.prowadzacy} | Wolne miejsca: {workshop.wolneMiejsca}
             </li>
           ))}
         </ul>
@@ -187,8 +213,8 @@ function App() {
             type="text"
             className="form-control"
             id="imieNazwisko"
-            value={imieNazwisko}
-            onChange={(e) => setImieNazwisko(e.target.value)}
+            value={participantName}
+            onChange={(e) => setParticipantName(e.target.value)}
           />
         </div>
 
@@ -201,8 +227,8 @@ function App() {
             type="email"
             className="form-control"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={participantEmail}
+            onChange={(e) => setParticipantEmail(e.target.value)}
           />
         </div>
 
@@ -215,8 +241,8 @@ function App() {
             type="number"
             className="form-control"
             id="numerWarsztatu"
-            value={numerWarsztatu}
-            onChange={(e) => setNumerWarsztatu(e.target.value)}
+            value={workshopIdInput}
+            onChange={(e) => setWorkshopIdInput(e.target.value)}
           />
         </div>
 
