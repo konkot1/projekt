@@ -64,3 +64,9 @@ Funkcja `handleFormSubmit` weryfikuje zgłoszenie przed aktualizacją stanu:
 - brak uzupełnionego imienia, nazwiska lub e-maila → komunikat błędu w konsoli o konieczności uzupełnienia danych,
 - podanie numeru ID, którego nie ma na liście warsztatów → `Błąd: Nieprawidłowy numer warsztatu.`,
 - wybór warsztatu z `wolneMiejsca === 0` → `Brak wolnych miejsc na wybrany warsztat: <tytuł>`.
+
+
+## Jakość kodu i komentarze dokumentacyjne
+
+- Stosowane są czytelne nazwy stanów, zmiennych pomocniczych oraz funkcji obsługujących zdarzenia.
+- Komponent główny oraz funkcje obsługi zdarzeń (m.in. `handleFormSubmit`) posiadają komentarze dokumentacyjne opisujące przeznaczenie, parametry i zwracany typ.
