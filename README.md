@@ -81,3 +81,13 @@ Szczegółowa dokumentacja testów wraz ze zrzutami ekranu przeglądarki i zakł
 - **Test 3:** poprawny zapis na warsztat ID `5`, spadek miejsc z `1` na `0`, wyczyszczenie pól i log w konsoli.
 - **Test 4:** próba zapisu na warsztat bez wolnych miejsc (ID `5` lub ID `3`) i komunikat o braku miejsc.
 - **Test 5:** próba zapisu na nieistniejące ID `99` i komunikat o nieprawidłowym numerze warsztatu.
+
+
+
+## Zarządzanie stanem aplikacji
+
+Stan komponentu `App` opiera się na hooku `useState`:
+- `tylkoDostepne` — wartość logiczna sterująca filtrem dostępności miejsc (`true` domyślnie),
+- `kategorie` — obiekt przechowujący aktywność filtrów (`Frontend`, `Backend`, `QA`),
+- `warsztaty` — tablica obiektów warsztatów z aktualizowaną liczbą `wolneMiejsca`,
+- `imieNazwisko`, `email`, `numerWarsztatu` — kontrolowane pola formularza zgłoszeniowego.
