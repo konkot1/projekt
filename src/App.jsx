@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import './App.css'
-
+import './App.css';
 import { useState } from "react";
 
 function App() {
   const [tylkoDostepne, setTylkoDostepne] = useState(true);
+
   const [kategorie, setKategorie] = useState({
     Frontend: true,
     Backend: true,
@@ -50,19 +50,73 @@ function App() {
     },
   ]);
 
-  const przefiltrowaneWarsztaty = warsztaty.filter((warsztat) => {
-  const pasujeKategoria = kategorie[warsztat.kategoria];
+  const [imieNazwisko, setImieNazwisko] = useState("");
+  const [email, setEmail] = useState("");
+  const [numerWarsztatu, setNumerWarsztatu] = useState("");
 
-  const pasujeDostepnosc = tylkoDostepne
-    ? warsztat.wolneMiejsca > 0
-    : true;
+  const przefiltrowaneWarsztaty = warsztaty.filter((warsztat) => {
+    const pasujeKategoria = kategorie[warsztat.kategoria];
+
+    const pasujeDostepnosc = tylkoDostepne
+      ? warsztat.wolneMiejsca > 0
+      : true;
 
     return pasujeKategoria && pasujeDostepnosc;
   });
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    if (!imieNazwisko.trim() || !email.trim()) {
+      console.error(
+        "Błąd: Uzupełnij imię, nazwisko oraz adres e-mail."
+      );
+      return;
+    }
+
+    const wybranyWarsztat = warsztaty.find(
+      (warsztat) => warsztat.id === Number(numerWarsztatu)
+    );
+
+    if (!wybranyWarsztat) {
+      console.error("Błąd: Nieprawidłowy numer warsztatu.");
+      return;
+    }
+
+    if (wybranyWarsztat.wolneMiejsca === 0) {
+      console.error(
+        `Brak wolnych miejsc na wybrany warsztat: ${wybranyWarsztat.tytul}`
+      );
+      return;
+    }
+
+    const nowaLiczbaMiejsc = wybranyWarsztat.wolneMiejsca - 1;
+
+    setWarsztaty((poprzednieWarsztaty) =>
+      poprzednieWarsztaty.map((warsztat) =>
+        warsztat.id === wybranyWarsztat.id
+          ? { ...warsztat, wolneMiejsca: nowaLiczbaMiejsc }
+          : warsztat
+      )
+    );
+
+    console.log(
+      `Zapisano uczestnika: ${imieNazwisko.trim()} (${email.trim()})`
+    );
+
+    console.log(
+      `Wybrany warsztat: ${wybranyWarsztat.tytul} (Pozostało miejsc: ${nowaLiczbaMiejsc})`
+    );
+
+    setImieNazwisko("");
+    setEmail("");
+    setNumerWarsztatu("");
+  };
+
   return (
     <div className="container mt-4">
       <h1>Katalog warsztatów IT</h1>
+
       <form>
         <div className="mb-3">
           <h5>Filtruj według kategorii:</h5>
@@ -81,12 +135,14 @@ function App() {
                   })
                 }
               />
+
               <label className="form-check-label" htmlFor={kategoria}>
                 {kategoria}
               </label>
             </div>
           ))}
         </div>
+
         <div className="mb-3">
           <div className="form-check">
             <input
@@ -96,13 +152,14 @@ function App() {
               checked={tylkoDostepne}
               onChange={(e) => setTylkoDostepne(e.target.checked)}
             />
+
             <label className="form-check-label" htmlFor="tylkoDostepne">
               Tylko warsztaty z wolnymi miejscami
             </label>
           </div>
         </div>
       </form>
-      
+
       <h3>Lista warsztatów:</h3>
 
       {przefiltrowaneWarsztaty.length > 0 ? (
@@ -120,15 +177,18 @@ function App() {
 
       <h2>Formularz zgłoszeniowy</h2>
 
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="imieNazwisko" className="form-label">
             Imię i nazwisko uczestnika:
           </label>
+
           <input
             type="text"
             className="form-control"
             id="imieNazwisko"
+            value={imieNazwisko}
+            onChange={(e) => setImieNazwisko(e.target.value)}
           />
         </div>
 
@@ -136,10 +196,13 @@ function App() {
           <label htmlFor="email" className="form-label">
             Adres e-mail:
           </label>
+
           <input
             type="email"
             className="form-control"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -147,12 +210,16 @@ function App() {
           <label htmlFor="numerWarsztatu" className="form-label">
             Numer warsztatu (ID):
           </label>
+
           <input
             type="number"
             className="form-control"
             id="numerWarsztatu"
+            value={numerWarsztatu}
+            onChange={(e) => setNumerWarsztatu(e.target.value)}
           />
         </div>
+
         <button type="submit" className="btn btn-primary">
           Zapisz na warsztat
         </button>
