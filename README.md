@@ -43,3 +43,14 @@ Aplikacja startuje z predefiniowaną listą 5 warsztatów przechowywaną w stani
 - **Filtr kategorii (`kategorie`):** pozwala włączać i wyłączać kategorie `Frontend`, `Backend` oraz `QA` za pomocą checkboxów.
 - **Filtr dostępności (`tylkoDostepne`):** domyślnie włączony (`true`); po zaznaczeniu wyświetla wyłącznie warsztaty z `wolneMiejsca > 0`, a po odznaczeniu pokazuje również pozycje z `0` wolnych miejsc.
 - Wynik filtrowania obliczany jest dynamicznie w tablicy `przefiltrowaneWarsztaty`.
+
+
+
+## Formularz zgłoszeniowy
+
+Formularz zbiera trzy dane:
+- **Imię i nazwisko uczestnika** (`imieNazwisko`)
+- **Adres e-mail** (`email`)
+- **Numer warsztatu (ID)** (`numerWarsztatu`)
+
+Po poprawnym wysłaniu formularza aplikacja zmniejsza liczbę `wolneMiejsca` wybranego warsztatu o `1`, wypisuje potwierdzenie i aktualną liczbę miejsc w konsoli przeglądarki oraz czyści pola formularza do `""`.
