@@ -70,3 +70,14 @@ Funkcja `handleFormSubmit` weryfikuje zgłoszenie przed aktualizacją stanu:
 
 - Stosowane są czytelne nazwy stanów, zmiennych pomocniczych oraz funkcji obsługujących zdarzenia.
 - Komponent główny oraz funkcje obsługi zdarzeń (m.in. `handleFormSubmit`) posiadają komentarze dokumentacyjne opisujące przeznaczenie, parametry i zwracany typ.
+
+
+
+## Scenariusze testowe (plik `testy.docx`)
+
+Szczegółowa dokumentacja testów wraz ze zrzutami ekranu przeglądarki i zakładki `Console` znajduje się w pliku `testy.docx` i obejmuje:
+- **Test 1:** stan początkowy aplikacji (5 warsztatów, aktywne kategorie, odznaczony filtr miejsc, puste pola).
+- **Test 2:** filtrowanie wyłącznie po kategorii `Frontend` z zaznaczoną opcją wolnych miejsc.
+- **Test 3:** poprawny zapis na warsztat ID `5`, spadek miejsc z `1` na `0`, wyczyszczenie pól i log w konsoli.
+- **Test 4:** próba zapisu na warsztat bez wolnych miejsc (ID `5` lub ID `3`) i komunikat o braku miejsc.
+- **Test 5:** próba zapisu na nieistniejące ID `99` i komunikat o nieprawidłowym numerze warsztatu.
