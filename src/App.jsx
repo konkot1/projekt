@@ -163,14 +163,14 @@ function App() {
       <h3>Lista warsztatów:</h3>
 
       {przefiltrowaneWarsztaty.length > 0 ? (
-        <ol>
+        <ul>
           {przefiltrowaneWarsztaty.map((warsztat) => (
             <li key={warsztat.id}>
-              {warsztat.tytul} ({warsztat.kategoria}) - Prowadzący:{" "}
-              {warsztat.prowadzacy} | wolne miejsca: {warsztat.wolneMiejsca}
+              ID: {warsztat.id} | {warsztat.tytul} ({warsztat.kategoria}) - Prowadzący:{" "}
+              {warsztat.prowadzacy} | Wolne miejsca: {warsztat.wolneMiejsca}
             </li>
           ))}
-        </ol>
+        </ul>
       ) : (
         <p>Brak warsztatów spełniających wybrane kryteria.</p>
       )}
