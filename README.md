@@ -91,3 +91,10 @@ Stan komponentu `App` opiera się na hooku `useState`:
 - `kategorie` — obiekt przechowujący aktywność filtrów (`Frontend`, `Backend`, `QA`),
 - `warsztaty` — tablica obiektów warsztatów z aktualizowaną liczbą `wolneMiejsca`,
 - `imieNazwisko`, `email`, `numerWarsztatu` — kontrolowane pola formularza zgłoszeniowego.
+
+
+
+
+## Podsumowanie dokumentacji testowej
+
+Każdy z pięciu scenariuszy testowych (`Test 1` – `Test 5`) jest udokumentowany zrzutem ekranu z przeglądarki wraz z otwartą zakładką `Console`, opisem wykonanej akcji oraz oczekiwanym rezultatem w pliku `testy.docx` (lub `testy.odt`).
