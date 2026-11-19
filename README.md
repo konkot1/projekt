@@ -24,3 +24,14 @@ Aplikacja webowa zbudowana w bibliotece **React** z wykorzystaniem stylów **Boo
 1. Zainstaluj zależności projektu:
    ```bash
    npm install
+
+
+
+   ## Dane początkowe warsztatów
+
+Aplikacja startuje z predefiniowaną listą 5 warsztatów przechowywaną w stanie `warsztaty`:
+- **ID 1:** Architektura aplikacji w React (`Frontend`, Anna Kowalska, wolne miejsca: `4`)
+- **ID 2:** Bezpieczeństwo API w .NET (`Backend`, Piotr Nowak, wolne miejsca: `2`)
+- **ID 3:** Testy automatyczne w Cypress (`QA`, Marek Zielinski, wolne miejsca: `0`)
+- **ID 4:** Projektowanie interfejsów z Bootstrap (`Frontend`, Katarzyna Wisniewska, wolne miejsca: `7`)
+- **ID 5:** Bazy danych PostgreSQL w praktyce (`Backend`, Tomasz Wojcik, wolne miejsca: `1`)
