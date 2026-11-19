@@ -35,3 +35,11 @@ Aplikacja startuje z predefiniowaną listą 5 warsztatów przechowywaną w stani
 - **ID 3:** Testy automatyczne w Cypress (`QA`, Marek Zielinski, wolne miejsca: `0`)
 - **ID 4:** Projektowanie interfejsów z Bootstrap (`Frontend`, Katarzyna Wisniewska, wolne miejsca: `7`)
 - **ID 5:** Bazy danych PostgreSQL w praktyce (`Backend`, Tomasz Wojcik, wolne miejsca: `1`)
+
+
+
+## Filtrowanie listy warsztatów
+
+- **Filtr kategorii (`kategorie`):** pozwala włączać i wyłączać kategorie `Frontend`, `Backend` oraz `QA` za pomocą checkboxów.
+- **Filtr dostępności (`tylkoDostepne`):** domyślnie włączony (`true`); po zaznaczeniu wyświetla wyłącznie warsztaty z `wolneMiejsca > 0`, a po odznaczeniu pokazuje również pozycje z `0` wolnych miejsc.
+- Wynik filtrowania obliczany jest dynamicznie w tablicy `przefiltrowaneWarsztaty`.
